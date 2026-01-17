@@ -113,12 +113,37 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
       range: z.object({ start: z.number().optional(), end: z.number().optional() }).optional()
     }).parse(args);
 
+    // Auto-register file resources if needed
+    if (parsed.uri.startsWith("resource://workspace/")) {
+      const match = parsed.uri.match(/resource:\/\/workspace\/([^/]+)\/file\/(.+)/);
+      if (match) {
+        const [, wsId, encodedPath] = match;
+        const ws = mustWorkspace(wsId);
+        const relPath = decodeURIComponent(encodedPath);
+        const absPath = path.join(ws.root, relPath);
+        resources.registerFile(parsed.uri, absPath);
+      }
+    }
+
     const data = await resources.read(parsed.uri, parsed.range);
     return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
   }
 
   if (name === "resource_write") {
     const parsed = z.object({ uri: z.string(), content: z.string() }).parse(args);
+
+    // Auto-register file resources if needed
+    if (parsed.uri.startsWith("resource://workspace/")) {
+      const match = parsed.uri.match(/resource:\/\/workspace\/([^/]+)\/file\/(.+)/);
+      if (match) {
+        const [, wsId, encodedPath] = match;
+        const ws = mustWorkspace(wsId);
+        const relPath = decodeURIComponent(encodedPath);
+        const absPath = path.join(ws.root, relPath);
+        resources.registerFile(parsed.uri, absPath);
+      }
+    }
+
     const out = await resources.writeFile(parsed.uri, parsed.content);
     return { content: [{ type: "text", text: JSON.stringify(out, null, 2) }] };
   }

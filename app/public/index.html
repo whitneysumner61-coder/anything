@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyBridge DevOS - Workspace Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 PyBridge DevOS</h1>
+            <p class="subtitle">Workspace & Command Manager</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Workspace Section -->
+            <section class="card">
+                <h2>📁 Workspace</h2>
+                <div class="workspace-controls">
+                    <div class="input-group">
+                        <input type="text" id="workspaceRoot" placeholder="/path/to/workspace" value="/tmp/test-workspace">
+                        <button onclick="openWorkspace()" class="btn-primary">Open Workspace</button>
+                    </div>
+                    <div id="workspaceInfo" class="info-box"></div>
+                </div>
+            </section>
+
+            <!-- Command Execution Section -->
+            <section class="card">
+                <h2>⚡ Execute Command</h2>
+                <div class="command-controls">
+                    <div class="input-group">
+                        <input type="text" id="command" placeholder="Command (e.g., python, node, ls)" value="ls">
+                        <input type="text" id="commandArgs" placeholder="Arguments (comma-separated)" value="-la">
+                    </div>
+                    <div class="input-group">
+                        <select id="sandboxProfile">
+                            <option value="dev">Dev Mode</option>
+                            <option value="ci">CI Mode</option>
+                            <option value="strict">Strict Mode</option>
+                        </select>
+                        <button onclick="executeCommand()" class="btn-primary">Execute</button>
+                    </div>
+                    <div id="commandStatus" class="info-box"></div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section class="card">
+                <h2>📝 Command Output</h2>
+                <div class="log-controls">
+                    <button onclick="refreshLogs()" class="btn-secondary">Refresh Logs</button>
+                    <button onclick="clearLogs()" class="btn-secondary">Clear</button>
+                </div>
+                <div class="log-viewer">
+                    <div class="log-panel">
+                        <h3>STDOUT</h3>
+                        <pre id="stdoutLog" class="log-output"></pre>
+                    </div>
+                    <div class="log-panel">
+                        <h3>STDERR</h3>
+                        <pre id="stderrLog" class="log-output error"></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- File Operations Section -->
+            <section class="card">
+                <h2>📄 File Operations</h2>
+                <div class="file-controls">
+                    <div class="input-group">
+                        <input type="text" id="filePath" placeholder="Relative file path" value="test.txt">
+                        <button onclick="readFile()" class="btn-secondary">Read</button>
+                    </div>
+                    <textarea id="fileContent" placeholder="File content will appear here..." rows="8"></textarea>
+                    <button onclick="writeFile()" class="btn-primary">Write File</button>
+                    <div id="fileStatus" class="info-box"></div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="card quick-actions">
+                <h2>🎯 Quick Actions</h2>
+                <div class="action-buttons">
+                    <button onclick="quickAction('python --version')" class="btn-action">
+                        <span>🐍</span> Python Version
+                    </button>
+                    <button onclick="quickAction('node --version')" class="btn-action">
+                        <span>📦</span> Node Version
+                    </button>
+                    <button onclick="quickAction('git status')" class="btn-action">
+                        <span>🔧</span> Git Status
+                    </button>
+                    <button onclick="quickAction('pwd')" class="btn-action">
+                        <span>📍</span> Current Dir
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>MCP Server Status: <span id="serverStatus" class="status-indicator">●</span></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

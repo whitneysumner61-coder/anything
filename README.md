@@ -29,7 +29,49 @@ npm run build
 
 ## Usage
 
-### Standalone
+### 🌐 Web Application (Recommended for Interactive Use)
+
+PyBridge DevOS includes a user-friendly web interface for managing workspaces, executing commands, and viewing logs in real-time.
+
+#### Quick Start
+
+**Linux/macOS:**
+```bash
+./launch-app.sh
+```
+
+**Windows:**
+```bash
+launch-app.bat
+```
+
+The application will automatically:
+1. Build the MCP server and web app
+2. Start the server on http://localhost:3000
+3. Open your browser
+
+#### Desktop Launcher Installation (Linux)
+
+Create a desktop shortcut and application menu entry:
+
+```bash
+./install-launcher.sh
+```
+
+After installation, you can:
+- Launch from your application menu (search for "PyBridge DevOS")
+- Double-click the desktop shortcut
+- Run `./launch-app.sh` from the terminal
+
+#### Web Interface Features
+
+- **Workspace Management**: Open and manage local workspaces
+- **Command Execution**: Run commands with different sandbox profiles (dev/ci/strict)
+- **Real-time Logs**: Stream stdout/stderr output with auto-refresh
+- **File Operations**: Read and write files in your workspace
+- **Quick Actions**: Pre-configured buttons for common tasks
+
+### Standalone MCP Server
 
 ```bash
 npm run start
@@ -62,15 +104,26 @@ Replace `/absolute/path/to/pybridge-devos` with the actual absolute path to this
 
 ```
 pybridge-devos/
-├── package.json
-├── tsconfig.json
-├── src/
-│   ├── server.ts           # Main MCP server implementation
+├── package.json                # Project dependencies and scripts
+├── tsconfig.json               # TypeScript config for MCP server
+├── tsconfig.app.json           # TypeScript config for web app
+├── launch-app.sh               # Linux/macOS launcher
+├── launch-app.bat              # Windows launcher
+├── install-launcher.sh         # Desktop shortcut installer
+├── src/                        # MCP Server source
+│   ├── server.ts               # Main MCP server implementation
 │   └── core/
-│       ├── resources.ts    # Resource management (files, logs)
-│       ├── sessions.ts     # Process session tracking
-│       └── sandbox.ts      # Security policy enforcement
-└── dist/                   # Built output (generated)
+│       ├── resources.ts        # Resource management (files, logs)
+│       ├── sessions.ts         # Process session tracking
+│       └── sandbox.ts          # Security policy enforcement
+├── app/                        # Web Application
+│   ├── src/
+│   │   └── app-server.ts       # Express server bridging web UI to MCP
+│   └── public/
+│       ├── index.html          # Web interface
+│       ├── styles.css          # Styling
+│       └── app.js              # Frontend JavaScript
+└── dist/                       # Built output (generated)
 ```
 
 ## Development

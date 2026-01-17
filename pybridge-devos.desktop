@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyBridge DevOS
+Comment=Workspace & Command Manager
+Exec=/bin/bash -c "cd %INSTALL_PATH% && ./launch-app.sh"
+Icon=%INSTALL_PATH%/icon.png
+Terminal=true
+Categories=Development;Utility;
+StartupNotify=true
