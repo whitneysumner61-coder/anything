@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyBridge DevOS 2.0 - AI Agent</title>
+    <link rel="stylesheet" href="agent-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>🤖 PyBridge DevOS 2.0</h1>
+                <p class="tagline">AI-Powered Application Generator</p>
+            </div>
+            <div class="status">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">Connecting...</span>
+            </div>
+        </header>
+
+        <main class="main-layout">
+            <!-- Natural Language Input Section -->
+            <section class="prompt-section">
+                <h2>✨ Describe Your Application</h2>
+                <p class="hint">Tell me what you want to build in plain English. I'll create it for you.</p>
+
+                <textarea
+                    id="promptInput"
+                    placeholder="Example: Create a todo list web app with a modern UI, dark mode, and local storage...&#10;&#10;Or: Build a REST API for managing users with authentication...&#10;&#10;Or: Make a CLI tool that analyzes log files and generates reports..."
+                    rows="6"
+                ></textarea>
+
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>Project Type</label>
+                        <select id="projectType">
+                            <option value="auto">Auto-Detect</option>
+                            <option value="web">Web Application</option>
+                            <option value="api">REST API</option>
+                            <option value="cli">CLI Tool</option>
+                            <option value="fullstack">Full-Stack App</option>
+                        </select>
+                    </div>
+
+                    <div class="option-group">
+                        <label>Technologies (optional)</label>
+                        <input type="text" id="technologies" placeholder="e.g., react, express, typescript">
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="btn-generate" onclick="generateProject()">
+                    🚀 Generate Application
+                </button>
+
+                <!-- Quick Prompts -->
+                <div class="quick-prompts">
+                    <p>Quick Start Ideas:</p>
+                    <button onclick="setPrompt('Create a weather dashboard that shows current weather and 5-day forecast with charts')">Weather Dashboard</button>
+                    <button onclick="setPrompt('Build a markdown note-taking app with tags and search')">Notes App</button>
+                    <button onclick="setPrompt('Create a portfolio website with projects showcase and contact form')">Portfolio Site</button>
+                    <button onclick="setPrompt('Build an expense tracker with categories and monthly summaries')">Expense Tracker</button>
+                </div>
+            </section>
+
+            <!-- Generation Progress -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <h3>🔨 Building Your Application</h3>
+                <div class="progress-steps">
+                    <div class="step" id="step1">
+                        <div class="step-icon">📋</div>
+                        <div class="step-text">Analyzing request...</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-icon">🏗️</div>
+                        <div class="step-text">Generating code...</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-icon">📦</div>
+                        <div class="step-text">Creating project structure...</div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-icon">✅</div>
+                        <div class="step-text">Finalizing...</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2>✅ Application Generated!</h2>
+
+                <div class="result-info">
+                    <div class="info-card">
+                        <strong>Project Name:</strong>
+                        <span id="projectName"></span>
+                    </div>
+                    <div class="info-card">
+                        <strong>Location:</strong>
+                        <span id="projectPath"></span>
+                    </div>
+                    <div class="info-card">
+                        <strong>Files Created:</strong>
+                        <span id="filesCount"></span>
+                    </div>
+                </div>
+
+                <div class="commands-section">
+                    <h3>🔧 Setup Commands</h3>
+                    <div id="commandsList"></div>
+                </div>
+
+                <div class="files-section">
+                    <h3>📁 Generated Files</h3>
+                    <div id="filesList"></div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>📝 Next Steps</h3>
+                    <ol id="nextStepsList"></ol>
+                </div>
+
+                <button class="btn-new-project" onclick="resetUI()">
+                    Create Another Application
+                </button>
+            </section>
+
+            <!-- Projects History -->
+            <section class="history-section">
+                <h2>📚 Recent Projects</h2>
+                <div id="projectsHistory" class="projects-grid"></div>
+            </section>
+
+            <!-- Chat with AI -->
+            <section class="chat-section" id="chatSection">
+                <div class="chat-toggle" onclick="toggleChat()">
+                    <span>💬 Chat with AI</span>
+                </div>
+                <div class="chat-content" id="chatContent" style="display: none;">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter')sendChat()">
+                        <button onclick="sendChat()">Send</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>PyBridge DevOS 2.0 - Advanced AI Development System | State: <span id="stateLocation">D:\PyBridge</span></p>
+        </footer>
+    </div>
+
+    <script src="agent.js"></script>
+</body>
+</html>
